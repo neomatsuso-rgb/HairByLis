@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>By Lis — Book</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#131211;
+    --white:#ffffff;
+    --cream:#F7F4EE;
+    --gray:#8C877D;
+    --line:#E4E0D6;
+    --danger:#B4472F;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--cream);
+    font-family:'Jost',sans-serif;
+    color:var(--black);
+    display:flex;
+    justify-content:center;
+  }
+  .phone{
+    width:100%;
+    max-width:420px;
+    min-height:100vh;
+    background:var(--white);
+    display:flex;
+    flex-direction:column;
+  }
+  header.brand{
+    padding:36px 24px 22px;
+    text-align:center;
+    border-bottom:1px solid var(--line);
+  }
+  header.brand .mark{
+    font-family:'Fraunces',serif;
+    font-size:34px;
+    letter-spacing:6px;
+    font-weight:500;
+  }
+  header.brand .sub{
+    font-size:11px;
+    letter-spacing:3px;
+    color:var(--black);
+    margin-top:6px;
+  }
+  .steps{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    padding:16px 0 0;
+  }
+  .steps span{
+    width:6px;height:6px;border-radius:50%;
+    background:var(--line);
+  }
+  .steps span.active{background:var(--black);}
+  .steps span.done{background:var(--gray);}
+  main{
+    flex:1;
+    padding:22px 24px 110px;
+  }
+  h2.step-title{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:22px;
+    margin:0 0 4px;
+  }
+  p.step-sub{
+    color:var(--gray);
+    font-size:13px;
+    margin:0 0 22px;
+  }
+  .cat-label{
+    font-size:11px;
+    letter-spacing:2px;
+    color:var(--black);
+    margin:22px 0 10px;
+  }
+  .cat-label:first-child{margin-top:0;}
+  .service-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:13px 0;
+    border-bottom:1px solid var(--line);
+    cursor:pointer;
+  }
+  .service-row .name{font-size:15px;}
+  .service-row .note{font-size:11.5px;color:var(--gray);margin-top:2px;}
+  .service-row .right{display:flex;align-items:center;gap:14px;}
+  .service-row .price{font-size:14px;color:var(--gray);}
+  .checkbox{
+    width:19px;height:19px;border-radius:50%;
+    border:1.4px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+  .checkbox.checked{background:var(--black);border-color:var(--black);}
+  .checkbox.checked::after{
+    content:'';width:6px;height:6px;background:var(--white);border-radius:50%;
+  }
+  .badge-new{
+    display:inline-block;
+    font-size:9.5px;letter-spacing:1px;
+    background:var(--line);color:var(--black);
+    padding:2px 6px;border-radius:3px;
+    margin-left:6px;
+    vertical-align:middle;
+  }
+  .cal-grid{
+    display:grid;grid-template-columns:repeat(7,1fr);gap:6px;
+    margin-top:6px;
+  }
+  .cal-head{font-size:11px;color:var(--gray);text-align:center;padding-bottom:4px;}
+  .cal-day{
+    aspect-ratio:1;display:flex;align-items:center;justify-content:center;
+    font-size:13px;border-radius:50%;cursor:pointer;
+  }
+  .cal-day.disabled{color:var(--line);cursor:default;}
+  .cal-day.selected{background:var(--black);color:var(--white);}
+  .month-nav{
+    display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;
+  }
+  .month-nav button{
+    background:none;border:none;font-size:16px;color:var(--black);cursor:pointer;
+  }
+  .month-nav .label{font-size:14px;font-weight:500;}
+  .time-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  }
+  .time-slot{
+    padding:12px 0;text-align:center;border:1px solid var(--line);
+    border-radius:6px;font-size:13.5px;cursor:pointer;
+  }
+  .time-slot.selected{background:var(--black);color:var(--white);border-color:var(--black);}
+  label.field-label{
+    display:block;font-size:12px;color:var(--gray);margin:16px 0 6px;
+  }
+  label.field-label:first-child{margin-top:0;}
+  input[type=text],input[type=tel]{
+    width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:6px;
+    font-family:'Jost',sans-serif;font-size:14px;background:var(--white);
+  }
+  input:focus{outline:none;border-color:var(--black);}
+  .error-text{color:var(--danger);font-size:12px;margin-top:6px;}
+  footer.bar{
+    position:sticky;bottom:0;background:var(--white);
+    border-top:1px solid var(--line);
+    padding:14px 24px;
+    display:flex;align-items:center;justify-content:space-between;
+    max-width:420px;width:100%;
+    margin-top:auto;
+  }
+  .bar .total{font-size:13px;color:var(--gray);}
+  .bar .total b{color:var(--black);font-size:17px;font-family:'Fraunces',serif;}
+  .btn{
+    background:var(--black);color:var(--white);border:none;
+    padding:13px 26px;border-radius:6px;font-size:13.5px;letter-spacing:1px;
+    cursor:pointer;font-family:'Jost',sans-serif;
+  }
+  .btn:disabled{opacity:0.35;cursor:not-allowed;}
+  .btn.ghost{background:none;color:var(--black);border:1px solid var(--line);}
+  .back-link{
+    font-size:12.5px;color:var(--gray);cursor:pointer;display:inline-block;margin-bottom:16px;
+  }
+  .receipt-card{
+    border:1px solid var(--line);border-radius:10px;padding:20px;
+  }
+  .receipt-row{display:flex;justify-content:space-between;font-size:13.5px;padding:8px 0;border-bottom:1px solid var(--line);}
+  .receipt-row:last-child{border-bottom:none;}
+  .center-icon{
+    width:56px;height:56px;border-radius:50%;background:var(--line);
+    display:flex;align-items:center;justify-content:center;margin:0 auto 18px;
+    font-size:24px;color:var(--black);
+  }
+  .hidden{display:none !important;}
+</style>
+</head>
+<body>
+<div class="phone">
+
+  <header class="brand">
+    <div class="mark">BY LIS</div>
+    <div class="sub">BEAUTY CONNOISSEUR</div>
+    <div class="steps">
+      <span data-dot="1" class="active"></span>
+      <span data-dot="2"></span>
+      <span data-dot="3"></span>
+      <span data-dot="4"></span>
+    </div>
+  </header>
+
+  <main>
+
+    <section id="step-1">
+      <h2 class="step-title">Select service(s)</h2>
+
+      <div class="cat-label">STANDARD SERVICES</div>
+      <div id="cat-standard"></div>
+
+      <div class="cat-label">ADDITIONAL FEE</div>
+      <div id="cat-additional"></div>
+
+      <div class="cat-label">DROP OFF SERVICES</div>
+      <div id="cat-dropoff"></div>
+    </section>
+
+    <section id="step-2" class="hidden">
+      <span class="back-link" onclick="goStep(1)">← Back</span>
+      <h2 class="step-title">Choose date</h2>
+      <p class="step-sub">Pick a day that works for you.</p>
+      <div class="month-nav">
+        <button onclick="shiftMonth(-1)">‹</button>
+        <div class="label" id="month-label"></div>
+        <button onclick="shiftMonth(1)">›</button>
+      </div>
+      <div class="cal-grid" id="cal-heads"></div>
+      <div class="cal-grid" id="cal-days"></div>
+    </section>
+
+    <section id="step-3" class="hidden">
+      <span class="back-link" onclick="goStep(2)">← Back</span>
+      <h2 class="step-title">Choose time</h2>
+      <p class="step-sub" id="chosen-date-sub"></p>
+      <div class="time-grid" id="time-grid"></div>
+    </section>
+
+    <section id="step-4" class="hidden">
+      <span class="back-link" onclick="goStep(3)">← Back</span>
+      <h2 class="step-title">Your details</h2>
+      <label class="field-label">Name</label>
+      <input type="text" id="in-name" placeholder="Your first name">
+
+      <label class="field-label">Surname</label>
+      <input type="text" id="in-surname" placeholder="Your surname">
+
+      <label class="field-label">Phone number</label>
+      <input type="tel" id="in-phone" placeholder="082 000 0000">
+      <div class="error-text hidden" id="details-error">Fill in your name, surname and phone number to continue.</div>
+    </section>
+
+    <section id="step-5" class="hidden">
+      <span class="back-link" onclick="goStep(4)">← Back</span>
+      <div class="center-icon">✓</div>
+      <h2 class="step-title" style="text-align:center;">Booking confirmed</h2>
+      <p class="step-sub" style="text-align:center;">Send your receipt to Lis on WhatsApp to finalize your booking.</p>
+
+      <div class="receipt-card">
+        <div class="receipt-row"><span>Client</span><span id="rec-client">—</span></div>
+        <div class="receipt-row"><span>Phone</span><span id="rec-phone">—</span></div>
+        <div class="receipt-row"><span>Date</span><span id="rec-date">—</span></div>
+        <div class="receipt-row"><span>Time</span><span id="rec-time">—</span></div>
+        <div class="receipt-row"><span>Location</span><span>Sandton, Johannesburg</span></div>
+        <div class="receipt-row"><span>Services</span><span id="rec-services" style="text-align:right;max-width:200px;">—</span></div>
+        <div class="receipt-row"><span>Deposit (50%)</span><span id="rec-deposit">R0</span></div>
+        <div class="receipt-row"><span>Balance on arrival</span><span id="rec-balance">R0</span></div>
+        <div class="receipt-row" style="font-size:11px;color:var(--gray);"><span>Payment method</span><span>iKhokha</span></div>
+        <div class="receipt-row"><b>Total</b><b id="rec-total">R0</b></div>
+      </div>
+
+      <div style="margin-top:20px;display:flex;flex-direction:column;gap:10px;">
+        <a class="btn" id="whatsapp-link" href="#" target="_blank" style="text-align:center;text-decoration:none;">Send to WhatsApp</a>
+        <button class="btn ghost" onclick="resetAll()">Book another appointment</button>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bar" id="bar-1">
+    <div class="total"><span id="count-label">0 selected</span><br><b id="total-label">R0</b></div>
+    <button class="btn" id="btn-continue-1" disabled onclick="goStep(2)">Continue</button>
+  </footer>
+
+  <footer class="bar hidden" id="bar-2">
+    <div class="total">&nbsp;</div>
+    <button class="btn" id="btn-continue-2" disabled onclick="goStep(3)">Continue</button>
+  </footer>
+
+  <footer class="bar hidden" id="bar-3">
+    <div class="total">&nbsp;</div>
+    <button class="btn" id="btn-continue-3" disabled onclick="goStep(4)">Continue</button>
+  </footer>
+
+  <footer class="bar hidden" id="bar-4">
+    <div class="total"><span>Total</span><br><b id="total-label-2">R0</b></div>
+    <button class="btn" id="btn-confirm" onclick="confirmBooking()">Confirm booking</button>
+  </footer>
+
+</div>
+
+<script>
+const SERVICES = {
+  standard: [
+    {id:'basic-install', name:'Classic install', note:'Side part, middle or no part', price:400},
+    {id:'styling', name:'Styling', note:'from', price:200},
+    {id:'trim-layers', name:'Trim / layers', price:150},
+  ],
+  additional: [
+    {id:'uncustomised', name:'Uncustomised unit', price:100},
+    {id:'edges', name:'Edges', price:50},
+  ],
+  dropoff: [
+    {id:'lace-wash', name:'Lace wash', price:150},
+    {id:'wig-wash', name:'Wig wash', price:250},
+    {id:'hair-toning', name:'Hair toning / dyeing', note:'from', price:400, isNew:true},
+    {id:'wig-revamp', name:'Wig revamping', note:'from', price:350},
+    {id:'wig-wash-treatment', name:'Wig wash & treatment', price:350},
+    {id:'customisation', name:'Customisation', note:'Bleaching & plucking', price:350},
+    {id:'house-calls', name:'House calls', note:'excluding Uber fares', price:500},
+  ]
+};
+
+let selected = {};
+let currentStep = 1;
+let calMonth = new Date();
+let selectedDate = null;
+let selectedTime = null;
+
+function renderServices(){
+  const render = (list, containerId) => {
+    const el = document.getElementById(containerId);
+    el.innerHTML = list.map(s => `
+      <div class="service-row" onclick="toggleService('${s.id}')">
+        <div>
+          <div class="name">${s.name}${s.isNew ? '<span class="badge-new">NEW</span>' : ''}</div>
+          ${s.note ? `<div class="note">${s.note}</div>` : ''}
+        </div>
+        <div class="right">
+          <span class="price">R${s.price}</span>
+          <span class="checkbox ${selected[s.id] ? 'checked' : ''}" id="cb-${s.id}"></span>
+        </div>
+      </div>
+    `).join('');
+  };
+  render(SERVICES.standard, 'cat-standard');
+  render(SERVICES.additional, 'cat-additional');
+  render(SERVICES.dropoff, 'cat-dropoff');
+}
+
+function allServices(){
+  return [...SERVICES.standard, ...SERVICES.additional, ...SERVICES.dropoff];
+}
+
+function toggleService(id){
+  selected[id] = !selected[id];
+  document.getElementById('cb-'+id).classList.toggle('checked', selected[id]);
+  updateTotals();
+}
+
+function updateTotals(){
+  const chosen = allServices().filter(s => selected[s.id]);
+  const total = chosen.reduce((sum,s) => sum + s.price, 0);
+  document.getElementById('count-label').textContent = `${chosen.length} selected`;
+  document.getElementById('total-label').textContent = `R${total}`;
+  document.getElementById('total-label-2').textContent = `R${total}`;
+  document.getElementById('btn-continue-1').disabled = chosen.length === 0;
+}
+
+function goStep(n){
+  for(let i=1;i<=5;i++){
+    document.getElementById('step-'+i).classList.toggle('hidden', i!==n);
+  }
+  for(let i=1;i<=4;i++){
+    const bar = document.getElementById('bar-'+i);
+    if(bar) bar.classList.toggle('hidden', i!==n);
+  }
+  document.querySelectorAll('.steps span').forEach((dot,idx)=>{
+    dot.classList.remove('active','done');
+    if(idx+1 < n) dot.classList.add('done');
+    if(idx+1 === n) dot.classList.add('active');
+  });
+  currentStep = n;
+  if(n===2) renderCalendar();
+  if(n===3) renderTimes();
+}
+
+function renderCalendar(){
+  const heads = document.getElementById('cal-heads');
+  heads.innerHTML = ['S','M','T','W','T','F','S'].map(d=>`<div class="cal-head">${d}</div>`).join('');
+  const label = document.getElementById('month-label');
+  const y = calMonth.getFullYear(), m = calMonth.getMonth();
+  label.textContent = calMonth.toLocaleDateString('en-ZA',{month:'long',year:'numeric'});
+  const firstDay = new Date(y,m,1).getDay();
+  const daysInMonth = new Date(y,m+1,0).getDate();
+  const today = new Date(); today.setHours(0,0,0,0);
+  let html = '';
+  for(let i=0;i<firstDay;i++) html += '<div></div>';
+  for(let d=1; d<=daysInMonth; d++){
+    const dateObj = new Date(y,m,d);
+    const past = dateObj < today;
+    const isSel = selectedDate && dateObj.getTime() === selectedDate.getTime();
+    html += `<div class="cal-day ${past?'disabled':''} ${isSel?'selected':''}" ${past?'':`onclick="pickDate(${y},${m},${d})"`}>${d}</div>`;
+  }
+  document.getElementById('cal-days').innerHTML = html;
+}
+
+function shiftMonth(delta){
+  calMonth.setMonth(calMonth.getMonth()+delta);
+  renderCalendar();
+}
+
+function pickDate(y,m,d){
+  selectedDate = new Date(y,m,d);
+  renderCalendar();
+  document.getElementById('btn-continue-2').disabled = false;
+}
+
+function renderTimes(){
+  const sub = document.getElementById('chosen-date-sub');
+  sub.textContent = selectedDate ? selectedDate.toLocaleDateString('en-ZA',{weekday:'long',day:'numeric',month:'long'}) : '';
+  const slots = ['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00'];
+  document.getElementById('time-grid').innerHTML = slots.map(t=>`
+    <div class="time-slot ${selectedTime===t?'selected':''}" onclick="pickTime('${t}')">${t}</div>
+  `).join('');
+  document.getElementById('btn-continue-3').disabled = !selectedTime;
+}
+
+function pickTime(t){
+  selectedTime = t;
+  renderTimes();
+  document.getElementById('btn-continue-3').disabled = false;
+}
+
+function confirmBooking(){
+  const name = document.getElementById('in-name').value.trim();
+  const surname = document.getElementById('in-surname').value.trim();
+  const phone = document.getElementById('in-phone').value.trim();
+  const detailsError = document.getElementById('details-error');
+
+  if(!name || !surname || !phone){
+    detailsError.classList.remove('hidden');
+    return;
+  }
+  detailsError.classList.add('hidden');
+
+  const chosen = allServices().filter(s => selected[s.id]);
+  const total = chosen.reduce((sum,s) => sum + s.price, 0);
+  const deposit = Math.round(total * 0.5);
+  const balance = total - deposit;
+
+  document.getElementById('rec-client').textContent = `${name} ${surname}`;
+  document.getElementById('rec-phone').textContent = phone;
+  document.getElementById('rec-date').textContent = selectedDate ? selectedDate.toLocaleDateString('en-ZA',{day:'numeric',month:'short',year:'numeric'}) : '—';
+  document.getElementById('rec-time').textContent = selectedTime || '—';
+  document.getElementById('rec-services').textContent = chosen.map(s=>s.name).join(', ');
+  document.getElementById('rec-deposit').textContent = `R${deposit}`;
+  document.getElementById('rec-balance').textContent = `R${balance}`;
+  document.getElementById('rec-total').textContent = `R${total}`;
+
+  const dateStr = selectedDate ? selectedDate.toLocaleDateString('en-ZA',{day:'numeric',month:'short',year:'numeric'}) : '—';
+  const message = `New booking request\n\nClient: ${name} ${surname}\nPhone: ${phone}\nDate: ${dateStr}\nTime: ${selectedTime || '—'}\nLocation: Sandton, Johannesburg\nServices: ${chosen.map(s=>s.name).join(', ')}\nDeposit (50%): R${deposit}\nBalance on arrival: R${balance}\nPayment method: iKhokha\nTotal: R${total}`;
+  document.getElementById('whatsapp-link').href = `https://wa.me/27797278599?text=${encodeURIComponent(message)}`;
+
+  goStep(5);
+}
+
+function resetAll(){
+  selected = {};
+  selectedDate = null;
+  selectedTime = null;
+  document.getElementById('in-name').value = '';
+  document.getElementById('in-surname').value = '';
+  document.getElementById('in-phone').value = '';
+  renderServices();
+  updateTotals();
+  goStep(1);
+}
+
+renderServices();
+updateTotals();
+</script>
+
+</body>
+</html>
