@@ -1,1 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>By Lis — Book</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    :root {
+      --black: #131211;
+      --white: #ffffff;
+      --cream: #f7f4ee;
+      --gray: #8c877d;
+      --line: #e4e0d6;
+      --danger: #b4472f;
+      --success: #356b45;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--cream);
+      font-family: "Jost", sans-serif;
+      color: var(--black);
+      display: flex;
+      justify-content: center;
+    }
+
+    .phone {
+      width: 100%;
+      max-width: 420px;
+      min-height: 100vh;
+      background: var(--white);
+      display: flex;
+      flex-direction: column;
+    }
+
+    header.brand {
+      padding: 36px 24px 22px;
+      text-align: center;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .mark {
+      font-family: "Fraunces", serif;
+      font-size: 34px;
+      letter-spacing: 6px;
+      font-weight: 500;
+    }
+
+    .sub {
+      font-size: 11px;
+      letter-spacing: 3px;
+      margin-top: 6px;
+    }
+
+    .steps {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding-top: 16px;
+    }
+
+    .steps span {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--line);
+    }
+
+    .steps span.active {
+      background: var(--black);
+    }
+
+    .steps span.done {
+      background: var(--gray);
+    }
+
+    main {
+      flex: 1;
+      padding: 22px 24px 110px;
+    }
+
+    h2 {
+      font-family: "Fraunces", serif;
+      font-weight: 500;
+      font-size: 22px;
+      margin: 0 0 4px;
+    }
+
+    .step-sub {
+      color: var(--gray);
+      font-size: 13px;
+      margin: 0 0 22px;
+    }
+
+    .cat-label {
+      font-size: 11px;
+      letter-spacing: 2px;
+      margin: 22px 0 10px;
+    }
+
+    .cat-label:first-child {
+      margin-top: 0;
+    }
+
+    .service-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--line);
+      cursor: pointer;
+    }
+
+    .service-row .name {
+      font-size: 15px;
+    }
+
+    .service-row .note {
+      font-size: 11.5px;
+      color: var(--gray);
+      margin-top: 2px;
+    }
+
+    .service-row .right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .service-row .price {
+      font-size: 14px;
+      color: var(--gray);
+    }
+
+    .checkbox {
+      width: 19px;
+      height: 19px;
+      border-radius: 50%;
+      border: 1.4px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .checkbox.checked {
+      background: var(--black);
+      border-color: var(--black);
+    }
+
+    .checkbox.checked::after {
+      content: "";
+      width: 6px;
+      height: 6px;
+      background: var(--white);
+      border-radius: 50%;
+    }
+
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .cal-head {
+      font-size: 11px;
+      color: var(--gray);
+      text-align: center;
+      padding-bottom: 4px;
+    }
+
+    .cal-day {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .cal-day.disabled {
+      color: var(--line);
+      cursor: default;
+    }
+
+    .cal-day.selected {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .month-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .month-nav button {
+      background: none;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .month-nav .label {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .time-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .time-slot {
+      padding: 12px 0;
+      text-align: center;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      font-size: 13.5px;
+      cursor: pointer;
+    }
+
+    .time-slot.selected {
+      background: var(--black);
+      color: var(--white);
+      border-color: var(--black);
+    }
+
+    .time-slot.disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      color: var(--gray);
+      margin: 16px 0 6px;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      font-family: "Jost", sans-serif;
+      font-size: 14px;
+      background: var(--white);
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--black);
+    }
+
+    .error-text {
+      color: var(--danger);
+      font-size: 12px;
+      margin-top: 8px;
+    }
+
+    .info-text {
+      color: var(--gray);
+      font-size: 12px;
+      line-height: 1.5;
+      margin-top: 12px;
+    }
+
+    footer.bar {
+      position: sticky;
+      bottom: 0;
+      background: var(--white);
+      border-top: 1px solid var(--line);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 420px;
+      width: 100%;
+      margin-top: auto;
+    }
+
+    .total {
+      font-size: 13px;
+      color: var(--gray);
+    }
+
+    .total b {
+      color: var(--black);
+      font-size: 17px;
+      font-family: "Fraunces", serif;
+    }
+
+    .btn {
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      padding: 13px 26px;
+      border-radius: 6px;
+      font-size: 13.5px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      font-family: "Jost", sans-serif;
+    }
+
+    .btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .btn.ghost {
+      background: none;
+      color: var(--black);
+      border: 1px solid var(--line);
+    }
+
+    .back-link {
+      font-size: 12.5px;
+      color: var(--gray);
+      cursor: pointer;
+      display: inline-block;
+      margin-bottom: 16px;
+    }
+
+    .receipt-card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 20px;
+    }
+
+    .receipt-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      font-size: 13.5px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .receipt-row:last-child {
+      border-bottom: none;
+    }
+
+    .center-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 18px;
+      font-size: 24px;
+    }
+
+    .loading,
+    .empty,
+    .error-box {
+      padding: 20px 0;
+      text-align: center;
+      color: var(--gray);
+      font-size: 13px;
+    }
+
+    .error-box {
+      color: var(--danger);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="phone">
+
+  <header class="brand">
+    <div class="mark" id="salon-name">BY LIS</div>
+    <div class="sub" id="salon-tagline">BEAUTY CONNOISSEUR</div>
+
+    <div class="steps">
+      <span data-dot="1" class="active"></span>
+      <span data-dot="2"></span>
+      <span data-dot="3"></span>
+      <span data-dot="4"></span>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- STEP 1 -->
+    <section id="step-1">
+
+      <h2>Select service(s)</h2>
+      <p class="step-sub">Choose what you'd like to book.</p>
+
+      <div id="services-loading" class="loading">
+        Loading services…
+      </div>
+
+      <div id="services-error" class="error-box hidden"></div>
+
+      <div id="services-container"></div>
+
+    </section>
+
+
+    <!-- STEP 2 -->
+    <section id="step-2" class="hidden">
+
+      <span class="back-link" onclick="goStep(1)">← Back</span>
+
+      <h2>Choose date</h2>
+      <p class="step-sub">
+        Pick a day that works for you.
+      </p>
+
+      <div class="month-nav">
+        <button type="button" onclick="shiftMonth(-1)">‹</button>
+        <div class="label" id="month-label"></div>
+        <button type="button" onclick="shiftMonth(1)">›</button>
+      </div>
+
+      <div class="cal-grid" id="cal-heads"></div>
+      <div class="cal-grid" id="cal-days"></div>
+
+    </section>
+
+
+    <!-- STEP 3 -->
+    <section id="step-3" class="hidden">
+
+      <span class="back-link" onclick="goStep(2)">← Back</span>
+
+      <h2>Choose time</h2>
+
+      <p class="step-sub" id="chosen-date-sub"></p>
+
+      <div id="times-loading" class="loading hidden">
+        Checking availability…
+      </div>
+
+      <div id="time-grid" class="time-grid"></div>
+
+      <div id="times-error" class="error-box hidden"></div>
+
+    </section>
+
+
+    <!-- STEP 4 -->
+    <section id="step-4" class="hidden">
+
+      <span class="back-link" onclick="goStep(3)">← Back</span>
+
+      <h2>Your details</h2>
+
+      <label for="in-name">Name</label>
+      <input
+        type="text"
+        id="in-name"
+        autocomplete="given-name"
+        placeholder="Your first name"
+      >
+
+      <label for="in-surname">Surname</label>
+      <input
+        type="text"
+        id="in-surname"
+        autocomplete="family-name"
+        placeholder="Your surname"
+      >
+
+      <label for="in-phone">Phone number</label>
+      <input
+        type="tel"
+        id="in-phone"
+        autocomplete="tel"
+        placeholder="082 000 0000"
+      >
+
+      <label for="in-email">Email address</label>
+      <input
+        type="email"
+        id="in-email"
+        autocomplete="email"
+        placeholder="you@example.com"
+      >
+
+      <label for="in-notes">Notes</label>
+      <textarea
+        id="in-notes"
+        placeholder="Anything Lis should know?"
+      ></textarea>
+
+      <div
+        id="details-error"
+        class="error-text hidden"
+      ></div>
+
+      <p class="info-text">
+        Your booking request will be submitted to By Lis for confirmation.
+      </p>
+
+    </section>
+
+
+    <!-- STEP 5 -->
+    <section id="step-5" class="hidden">
+
+      <div class="center-icon">✓</div>
+
+      <h2 style="text-align:center;">
+        Booking request received
+      </h2>
+
+      <p
+        class="step-sub"
+        style="text-align:center;"
+      >
+        Your appointment has been submitted. Lis will confirm the booking.
+      </p>
+
+      <div class="receipt-card">
+
+        <div class="receipt-row">
+          <span>Client</span>
+          <span id="rec-client">—</span>
+        </div>
+
+        <div class="receipt-row">
+          <span>Phone</span>
+          <span id="rec-phone">—</span>
+        </div>
+
+        <div class="receipt-row">
+          <span>Date</span>
+          <span id="rec-date">—</span>
+        </div>
+
+        <div class="receipt-row">
+          <span>Time</span>
+          <span id="rec-time">—</span>
+        </div>
+
+        <div class="receipt-row">
+          <span>Services</span>
+          <span
+            id="rec-services"
+            style="text-align:right;max-width:200px;"
+          >
+            —
+          </span>
+        </div>
+
+        <div class="receipt-row">
+          <span>Deposit</span>
+          <span id="rec-deposit">R0</span>
+        </div>
+
+        <div class="receipt-row">
+          <span>Balance</span>
+          <span id="rec-balance">R0</span>
+        </div>
+
+        <div class="receipt-row">
+          <b>Total</b>
+          <b id="rec-total">R0</b>
+        </div>
+
+      </div>
+
+      <div
+        style="
+          margin-top:20px;
+          display:flex;
+          flex-direction:column;
+          gap:10px;
+        "
+      >
+
+        <a
+          class="btn"
+          id="whatsapp-link"
+          href="#"
+          target="_blank"
+          rel="noopener"
+          style="text-align:center;text-decoration:none;"
+        >
+          Contact Lis on WhatsApp
+        </a>
+
+        <button
+          class="btn ghost"
+          onclick="resetAll()"
+        >
+          Book another appointment
+        </button>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- STEP 1 BAR -->
+  <footer class="bar" id="bar-1">
+
+    <div class="total">
+      <span id="count-label">0 selected</span>
+      <br>
+      <b id="total-label">R0</b>
+    </div>
+
+    <button
+      class="btn"
+      id="btn-continue-1"
+      disabled
+      onclick="goStep(2)"
+    >
+      Continue
+    </button>
+
+  </footer>
+
+
+  <!-- STEP 2 BAR -->
+  <footer class="bar hidden" id="bar-2">
+
+    <div class="total">&nbsp;</div>
+
+    <button
+      class="btn"
+      id="btn-continue-2"
+      disabled
+      onclick="goStep(3)"
+    >
+      Continue
+    </button>
+
+  </footer>
+
+
+  <!-- STEP 3 BAR -->
+  <footer class="bar hidden" id="bar-3">
+
+    <div class="total">&nbsp;</div>
+
+    <button
+      class="btn"
+      id="btn-continue-3"
+      disabled
+      onclick="goStep(4)"
+    >
+      Continue
+    </button>
+
+  </footer>
+
+
+  <!-- STEP 4 BAR -->
+  <footer class="bar hidden" id="bar-4">
+
+    <div class="total">
+      <span>Total</span>
+      <br>
+      <b id="total-label-2">R0</b>
+    </div>
+
+    <button
+      class="btn"
+      id="btn-confirm"
+      onclick="confirmBooking()"
+    >
+      Confirm booking
+    </button>
+
+  </footer>
+
+</div>
+
+
+<!--
+  Supabase configuration is deliberately kept in a separate file.
+
+  Create supabase-config.js next.
+
+  Do NOT put a Supabase service_role/secret key in this file.
+-->
+<script src="./supabase-config.js"></script>
+
+<script type="module">
+
+  import {
+    createClient
+  } from "https://esm.sh/@supabase/supabase-js@2";
+
+
+  /*
+   * ------------------------------------------------------------
+   * SUPABASE
+   * ------------------------------------------------------------
+   */
+
+  if (
+    !window.SUPABASE_URL ||
+    !window.SUPABASE_PUBLISHABLE_KEY
+  ) {
+
+    document.getElementById("services-loading").classList.add("hidden");
+
+    const error = document.getElementById("services-error");
+
+    error.textContent =
+      "Booking system configuration is missing.";
+
+    error.classList.remove("hidden");
+
+    throw new Error(
+      "Missing SUPABASE_URL or SUPABASE_PUBLISHABLE_KEY"
+    );
+  }
+
+
+  const supabase = createClient(
+    window.SUPABASE_URL,
+    window.SUPABASE_PUBLISHABLE_KEY
+  );
+
+
+  /*
+   * ------------------------------------------------------------
+   * STATE
+   * ------------------------------------------------------------
+   */
+
+  let salon = null;
+
+  let services = [];
+
+  let selectedServices = [];
+
+  let selectedDate = null;
+
+  let selectedTime = null;
+
+  let currentStep = 1;
+
+  let calendarMonth = new Date();
+
+
+  /*
+   * ------------------------------------------------------------
+   * HELPERS
+   * ------------------------------------------------------------
+   */
+
+  const money = value =>
+    `R${Number(value).toLocaleString("en-ZA")}`;
+
+
+  const getSalonHandle = () => {
+
+    const params = new URLSearchParams(
+      window.location.search
+    );
+
+    return (
+      params.get("salon") ||
+      "by-lis"
+    ).trim().toLowerCase();
+
+  };
+
+
+  const allSelectedServices = () =>
+    services.filter(service =>
+      selectedServices.includes(service.id)
+    );
+
+
+  const selectedTotal = () =>
+    allSelectedServices()
+      .reduce(
+        (total, service) =>
+          total + Number(service.price),
+        0
+      );
+
+
+  const selectedDuration = () =>
+    allSelectedServices()
+      .reduce(
+        (total, service) =>
+          total + Number(service.duration_minutes || 60),
+        0
+      );
+
+
+  /*
+   * ------------------------------------------------------------
+   * LOAD SALON
+   * ------------------------------------------------------------
+   */
+
+  async function loadSalon() {
+
+    const handle = getSalonHandle();
+
+    const {
+      data,
+      error
+    } = await supabase
+      .from("salons")
+      .select(`
+        id,
+        name,
+        tagline,
+        description,
+        location,
+        phone,
+        whatsapp,
+        instagram,
+        logo_url,
+        timezone,
+        opening_time,
+        closing_time,
+        deposit_percent,
+        is_published
+      `)
+      .eq("handle", handle)
+      .eq("is_published", true)
+      .maybeSingle();
+
+
+    if (error) {
+      throw error;
+    }
+
+
+    if (!data) {
+
+      throw new Error(
+        "This salon is not currently available for online booking."
+      );
+    }
+
+
+    salon = data;
+
+
+    document.title =
+      `${salon.name || "Salon"} — Book`;
+
+
+    document.getElementById(
+      "salon-name"
+    ).textContent =
+      salon.name || "BY LIS";
+
+
+    document.getElementById(
+      "salon-tagline"
+    ).textContent =
+      salon.tagline || "BEAUTY CONNOISSEUR";
+  }
+
+
+  /*
+   * ------------------------------------------------------------
+   * LOAD REAL SERVICES
+   * ------------------------------------------------------------
+   */
+
+  async function loadServices() {
+
+    const {
+      data,
+      error
+    } = await supabase
+      .from("services")
+      .select(`
+        id,
+        name,
+        description,
+        price,
+        duration_minutes,
+        sort_order
+      `)
+      .eq("salon_id", salon.id)
+      .eq("is_active", true)
+      .order("sort_order", {
+        ascending: true
+      });
+
+
+    if (error) {
+      throw error;
+    }
+
+
+    services = data || [];
+
+
+    document.getElementById(
+      "services-loading"
+    ).classList.add("hidden");
+
+
+    renderServices();
+  }
+
+
+  /*
+   * ------------------------------------------------------------
+   * SERVICES
+   * ------------------------------------------------------------
+   */
+
+  function renderServices() {
+
+    const container =
+      document.getElementById(
+        "services-container"
+      );
+
+
+    if (!services.length) {
+
+      container.innerHTML = `
+        <div class="empty">
+          No services are currently available.
+        </div>
+      `;
+
+      return;
+    }
+
+
+    container.innerHTML =
+      services.map(service => {
+
+        const checked =
+          selectedServices.includes(service.id);
+
+
+        return `
+          <div
+            class="service-row"
+            data-service-id="${service.id}"
+          >
+
+            <div>
+
+              <div class="name">
+                ${escapeHtml(service.name)}
+              </div>
+
+              ${
+                service.description
+                  ? `
+                    <div class="note">
+                      ${escapeHtml(service.description)}
+                    </div>
+                  `
+                  : ""
+              }
+
+            </div>
+
+            <div class="right">
+
+              <span class="price">
+                ${money(service.price)}
+              </span>
+
+              <span
+                class="checkbox ${
+                  checked ? "checked" : ""
+                }"
+              ></span>
+
+            </div>
+
+          </div>
+        `;
+
+      }).join("");
+
+
+    container
+      .querySelectorAll(".service-row")
+      .forEach(row => {
+
+        row.addEventListener(
+          "click",
+          () => {
+
+            toggleService(
+              row.dataset.serviceId
+            );
+
+          }
+        );
+
+      });
+
+
+    updateTotals();
+  }
+
+
+  function toggleService(id) {
+
+    if (
+      selectedServices.includes(id)
+    ) {
+
+      selectedServices =
+        selectedServices.filter(
+          serviceId =>
+            serviceId !== id
+        );
+
+    } else {
+
+      selectedServices.push(id);
+
+    }
+
+
+    renderServices();
+  }
+
+
+  function updateTotals() {
+
+    const count =
+      selectedServices.length;
+
+
+    const total =
+      selectedTotal();
+
+
+    document.getElementById(
+      "count-label"
+    ).textContent =
+      `${count} selected`;
+
+
+    document
